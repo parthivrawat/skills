@@ -1,0 +1,16 @@
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+
+# Build / validation artifacts
+dist/
+build/
+*.log
