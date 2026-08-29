@@ -7,7 +7,7 @@ When adding a new skill, follow the six-phase workflow:
 1. **Understand** — Identify name, objective, target users, use cases, inputs, outputs, tools, constraints, risks, and dependencies.
 2. **Design** — Create metadata, scope, triggers, input/output contracts, procedure, decision rules, error handling, security model, examples, and tests.
 3. **Normalize** — Check the skill against the universal specification for terminology, naming, metadata, inputs/outputs, error semantics, versioning, security language, and formatting.
-4. **Validate** — Run `.\scripts\validate.ps1` and review the Quality Gate. If you also produce a machine-readable skill contract, verify it against `schemas/skill.schema.json` or `schemas/skill.schema.yaml`.
+4. **Validate** — Run `.\scripts\validate.ps1` and then `.\scripts\quality-gate.ps1` to review the Quality Gate. If you also produce a machine-readable skill contract, verify it against `schemas/skill.schema.json` or `schemas/skill.schema.yaml`.
 5. **Package** — Produce the final `SKILL.md` and optional `README.md`, `examples/`, `tests/`, and platform adapters.
 6. **Explain** — Briefly summarize what the skill does, when to use it, its major inputs/outputs, dependencies, platform considerations, and validation status.
 

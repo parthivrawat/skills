@@ -145,20 +145,20 @@ A concise, cited answer to the user's query, plus metadata about confidence, sou
 ### Output Format
 
 ```markdown
-## <paraphrased query>
+## {question}
 
 **Answer**
-<concise answer>
+{answer}
 
 **Sources**
 - [Source Title](URL)
 - [Source Title](URL)
 
 **Confidence**
-<high | medium | low>
+{confidence}
 
 **Limitations**
-<known limitations or uncertainty>
+{limitations}
 ```
 
 ### Output Requirements
@@ -259,7 +259,7 @@ The agent retrieves recent sources, verifies agreement across them, and reports 
 ## Latest stable version of Python
 
 **Answer**
-As of <current date>, the latest stable version of Python is 3.x.y, per the official Python downloads page and release notes.
+As of the current date, the latest stable version of Python is 3.x.y, per the official Python downloads page and release notes.
 
 **Sources**
 - [Download Python](https://www.python.org/downloads/)

@@ -67,6 +67,21 @@ skills/
 - All required Markdown sections are present
 - Skill names are unique within the library
 
+## Quality Gate
+
+`scripts/quality-gate.ps1` runs the full quality gate:
+
+- Calls `validate.ps1`
+- Verifies every skill has `README.md`, `tests/`, and `examples/`
+- Checks for at least two examples
+- Rejects unresolved `TBD` or angle-bracket placeholders
+- Verifies Change History is populated
+- Checks every platform adapter has `ADAPTER.md` and a skill artifact
+
+## Continuous Integration
+
+A GitHub Actions workflow in `.github/workflows/quality-gate.yml` runs the quality gate on every push and pull request to `main`.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
