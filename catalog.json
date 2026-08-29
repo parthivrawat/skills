@@ -1,0 +1,36 @@
+{
+  "library": {
+    "name": "Universal Agent Skills Library",
+    "version": "1.0.0",
+    "last_updated": "2026-08-29",
+    "skills": [
+      {
+        "name": "web-research",
+        "version": "1.0.0",
+        "description": "Searches the public web for authoritative sources and produces a concise, cited answer to a user question.",
+        "status": "stable",
+        "tags": [
+          "web",
+          "research",
+          "search",
+          "summarization"
+        ],
+        "path": "skills/web-research/SKILL.md",
+        "adapters": [
+          {
+            "platform": "windsurf",
+            "path": "adapters/windsurf/web-research/SKILL.md"
+          },
+          {
+            "platform": "devin",
+            "path": "adapters/devin/web-research/SKILL.md"
+          },
+          {
+            "platform": "openai",
+            "path": "adapters/openai/web-research/tool.json"
+          }
+        ]
+      }
+    ]
+  }
+}

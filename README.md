@@ -9,7 +9,13 @@ skills/
 ├── README.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── CHANGELOG.md
+├── REGISTRY.md
+├── catalog.json
 ├── .gitignore
+├── .github/
+│   └── workflows/
+│       └── quality-gate.yml
 ├── schemas/
 │   ├── skill.schema.json
 │   ├── skill.schema.yaml
@@ -27,7 +33,8 @@ skills/
 │   ├── example-skill.json
 │   └── example-skill.yaml
 └── scripts/
-    └── validate.ps1
+    ├── validate.ps1
+    └── quality-gate.ps1
 ```
 
 ## Quickstart
@@ -81,6 +88,13 @@ skills/
 ## Continuous Integration
 
 A GitHub Actions workflow in `.github/workflows/quality-gate.yml` runs the quality gate on every push and pull request to `main`.
+
+## Registry and Changelog
+
+- `REGISTRY.md` is the human-readable skill catalog.
+- `catalog.json` is the machine-readable skill catalog.
+- `CHANGELOG.md` tracks library-level releases.
+- Per-skill change history lives in each `skills/<name>/SKILL.md`.
 
 ## Contributing
 
