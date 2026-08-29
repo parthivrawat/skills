@@ -1,0 +1,30 @@
+{
+  "type": "function",
+  "function": {
+    "name": "web_research",
+    "description": "Searches the public web for authoritative sources and produces a concise, cited answer to a user question.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The user question or topic to research."
+        },
+        "max_sources": {
+          "type": "integer",
+          "default": 5,
+          "description": "Maximum number of distinct sources to evaluate and cite."
+        },
+        "output_format": {
+          "type": "string",
+          "enum": ["markdown", "bullet", "table"],
+          "default": "markdown",
+          "description": "Preferred output format."
+        }
+      },
+      "required": ["query"],
+      "additionalProperties": false
+    },
+    "strict": true
+  }
+}
