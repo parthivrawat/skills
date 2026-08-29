@@ -12,7 +12,9 @@ skills/
 ├── .gitignore
 ├── schemas/
 │   ├── skill.schema.json
-│   └── skill.schema.yaml
+│   ├── skill.schema.yaml
+│   ├── skill-frontmatter.schema.json
+│   └── skill-frontmatter.schema.yaml
 ├── templates/
 │   ├── SKILL.md
 │   └── platform-adapter.md
@@ -20,6 +22,10 @@ skills/
 │   └── .gitkeep
 ├── adapters/
 │   └── .gitkeep
+├── examples/
+│   ├── .gitkeep
+│   ├── example-skill.json
+│   └── example-skill.yaml
 └── scripts/
     └── validate.ps1
 ```
@@ -43,14 +49,23 @@ skills/
 - Security by default
 - Composability and testability
 
+## Schemas
+
+- `schemas/skill.schema.json` and `.yaml` define the full, platform-agnostic, machine-readable skill contract.
+- `schemas/skill-frontmatter.schema.json` and `.yaml` define the YAML frontmatter used by every `SKILL.md`.
+- `examples/example-skill.json` and `.yaml` show a minimal valid machine-readable skill.
+
 ## Validation
 
 `scripts/validate.ps1` performs a lightweight check on every `skills/<name>/SKILL.md`:
 
-- Required YAML frontmatter (`name`, `version`, `description`, `author`, `license`, `status`, `tags`)
-- Required Markdown sections
-- Unique skill names
-- Basic naming convention
+- Required and non-empty YAML frontmatter, sourced from `skill-frontmatter.schema.json`
+- `name` matches the kebab-case pattern
+- `version` is in `MAJOR.MINOR.PATCH` format
+- `status` is a valid value from the frontmatter schema
+- `tags` is a non-empty list
+- All required Markdown sections are present
+- Skill names are unique within the library
 
 ## Contributing
 

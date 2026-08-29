@@ -1,78 +1,198 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 $id: https://example.com/schemas/skill.yaml
-title: Agent Skill Frontmatter
-description: Core metadata schema for a universal agent skill.
+title: Universal Agent Skill
+description: Machine-readable contract for a portable, composable agent skill.
 type: object
 required:
-  - name
-  - version
-  - description
-  - author
-  - license
-  - status
-  - tags
+  - skill
 properties:
-  name:
-    type: string
-    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
-    description: Unique kebab-case skill name.
-  version:
-    type: string
-    pattern: "^\\d+\\.\\d+\\.\\d+$"
-    description: Semantic version.
-  description:
-    type: string
-    minLength: 1
-    description: Short capability description.
-  author:
-    type: string
-    description: Author or organization.
-  license:
-    type: string
-    description: License identifier.
-  status:
-    type: string
-    enum:
-      - stable
-      - beta
-      - alpha
-      - experimental
-      - deprecated
-    description: Maturity status.
-  tags:
-    type: array
-    items:
-      type: string
-    description: Tags for discovery.
-  created:
-    type: string
-    format: date
-    description: Creation date.
-  updated:
-    type: string
-    format: date
-    description: Last updated date.
-  compatibility:
-    type: array
-    items:
-      type: string
-    description: Compatible platforms or runtimes.
-  dependencies:
-    type: array
-    items:
-      type: string
-    description: External dependencies.
-  risk_level:
-    type: string
-    description: Risk classification.
-  input_types:
-    type: array
-    items:
-      type: string
-    description: Accepted input types.
-  output_types:
-    type: array
-    items:
-      type: string
-    description: Produced output types.
+  skill:
+    type: object
+    required:
+      - name
+      - version
+      - description
+      - purpose
+      - scope
+      - triggers
+      - preconditions
+      - inputs
+      - context
+      - tools
+      - procedure
+      - decision_rules
+      - outputs
+      - errors
+      - security
+      - quality
+      - examples
+      - validation
+      - dependencies
+      - side_effects
+      - compatibility
+    properties:
+      name:
+        type: string
+        pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+        description: Unique kebab-case skill name.
+      version:
+        type: string
+        pattern: "^\\d+\\.\\d+\\.\\d+$"
+        description: Semantic version.
+      description:
+        type: string
+        minLength: 1
+        description: Short capability description.
+      purpose:
+        type: string
+        minLength: 1
+        description: What the skill enables an agent to accomplish.
+      scope:
+        type: object
+        required:
+          - in
+          - out
+        properties:
+          in:
+            type: array
+            items:
+              type: string
+            description: Capabilities that are in scope.
+          out:
+            type: array
+            items:
+              type: string
+            description: Capabilities that are out of scope.
+      triggers:
+        type: array
+        items:
+          type: string
+        description: Conditions that activate the skill.
+      preconditions:
+        type: array
+        items:
+          type: string
+        description: Requirements that must be met before execution.
+      inputs:
+        type: array
+        items:
+          type: object
+          required:
+            - name
+            - required
+            - type
+          properties:
+            name:
+              type: string
+            required:
+              type: boolean
+            type:
+              type: string
+            description:
+              type: string
+            default: {}
+        description: Inputs accepted by the skill.
+      context:
+        type: array
+        items:
+          type: string
+        description: Contextual information the agent may use.
+      tools:
+        type: array
+        items:
+          type: object
+          required:
+            - name
+            - required
+          properties:
+            name:
+              type: string
+            required:
+              type: boolean
+            purpose:
+              type: string
+            constraints:
+              type: string
+        description: Tools and resources the skill may use.
+      procedure:
+        type: array
+        items:
+          type: string
+        description: Ordered steps the agent should follow.
+      decision_rules:
+        type: array
+        items:
+          type: string
+        description: Rules that drive branching behavior.
+      outputs:
+        type: object
+        required:
+          - primary
+        properties:
+          primary:
+            type: string
+          format:
+            type: string
+          requirements:
+            type: array
+            items:
+              type: string
+        description: Output contract for the skill.
+      errors:
+        type: array
+        items:
+          type: string
+        description: Known failure modes and how to handle them.
+      security:
+        type: array
+        items:
+          type: string
+        description: Safety and security constraints.
+      quality:
+        type: array
+        items:
+          type: string
+        description: Quality requirements for the result.
+      examples:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            input:
+              type: string
+            behavior:
+              type: string
+            output:
+              type: string
+        description: Example inputs and expected outputs.
+      validation:
+        type: array
+        items:
+          type: string
+        description: Checklist used to verify the skill.
+      dependencies:
+        type: array
+        items:
+          type: string
+        description: External dependencies.
+      side_effects:
+        type: array
+        items:
+          type: string
+          enum:
+            - none
+            - creates_files
+            - modifies_database
+            - sends_messages
+            - modifies_state
+            - other
+        description: Observable side effects of executing the skill.
+      compatibility:
+        type: array
+        items:
+          type: string
+        description: Compatible platforms or runtimes.
+    additionalProperties: false
 additionalProperties: false

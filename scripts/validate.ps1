@@ -3,8 +3,9 @@
 .SYNOPSIS
     Validates all SKILL.md files in the skills/ directory.
 .DESCRIPTION
-    Performs a lightweight structural validation: YAML frontmatter keys,
-    kebab-case names, semantic versions, and required Markdown sections.
+    Performs a structural validation: YAML frontmatter (against the schema
+    in schemas/skill-frontmatter.schema.json), kebab-case names, semantic
+    versions, status values, and required Markdown sections.
 #>
 
 [CmdletBinding()]
@@ -12,7 +13,6 @@ param (
     [string]$Root = (Split-Path -Parent $PSScriptRoot)
 )
 
-$requiredFrontmatter = @("name", "version", "description", "author", "license", "status", "tags")
 $requiredSections = @(
     "Purpose",
     "Scope",
@@ -43,14 +43,68 @@ function Get-Frontmatter {
     param([string]$Path)
     $raw = Get-Content $Path -Raw
     if ($raw -notmatch "(?s)^---\r?\n(.*?)\r?\n---\r?\n") { return $null }
-    $block = $Matches[1]
-    $obj = @{}
-    foreach ($line in $block -split "`r?`n") {
+    $lines = $Matches[1] -split "`r?`n"
+    $obj = @{
+        __raw = $Matches[1]
+    }
+    $i = 0
+    while ($i -lt $lines.Count) {
+        $line = $lines[$i]
         if ($line -match "^(\w+):\s*(.*)$") {
-            $obj[$matches[1].Trim()] = $matches[2].Trim()
+            $key = $matches[1].Trim()
+            $value = $matches[2].Trim()
+            if ($value -eq "") {
+                # Check for a YAML list on following lines
+                $list = @()
+                $j = $i + 1
+                while ($j -lt $lines.Count -and $lines[$j] -match "^\s*-\s+(.*)$") {
+                    $list += $matches[1].Trim()
+                    $j++
+                }
+                if ($list.Count -gt 0) {
+                    $obj[$key] = $list
+                    $i = $j - 1
+                } else {
+                    $obj[$key] = ""
+                }
+            } else {
+                $obj[$key] = $value
+            }
         }
+        $i++
     }
     return $obj
+}
+
+# Load the frontmatter schema for required fields and constraints.
+$schemaPath = Join-Path (Join-Path $Root "schemas") "skill-frontmatter.schema.json"
+$schema = $null
+if (Test-Path $schemaPath) {
+    $schema = Get-Content $schemaPath -Raw | ConvertFrom-Json
+}
+
+if ($schema -and $schema.required) {
+    $requiredFrontmatter = $schema.required
+} else {
+    $requiredFrontmatter = @("name", "version", "description", "author", "license", "status", "tags")
+}
+
+if ($schema -and $schema.properties.name.pattern) {
+    $namePattern = $schema.properties.name.pattern
+} else {
+    $namePattern = "^[a-z0-9]+(-[a-z0-9]+)*$"
+}
+
+if ($schema -and $schema.properties.version.pattern) {
+    $versionPattern = $schema.properties.version.pattern
+} else {
+    $versionPattern = "^\d+\.\d+\.\d+$"
+}
+
+if ($schema -and $schema.properties.status.enum) {
+    $statusEnum = $schema.properties.status.enum
+} else {
+    $statusEnum = @("stable", "beta", "alpha", "experimental", "deprecated")
 }
 
 if (!(Test-Path $skillDir)) {
@@ -74,15 +128,23 @@ foreach ($file in $skillFiles) {
     }
 
     foreach ($key in $requiredFrontmatter) {
-        if (-not $fm.ContainsKey($key) -or [string]::IsNullOrWhiteSpace($fm[$key])) {
+        if (-not $fm.ContainsKey($key)) {
             Write-Host "  [ERROR] Missing required frontmatter key: $key" -ForegroundColor Red
+            $allGood = $false
+        } elseif ($fm[$key] -is [array]) {
+            if ($fm[$key].Count -eq 0) {
+                Write-Host "  [ERROR] Required frontmatter list is empty: $key" -ForegroundColor Red
+                $allGood = $false
+            }
+        } elseif ([string]::IsNullOrWhiteSpace($fm[$key])) {
+            Write-Host "  [ERROR] Required frontmatter value is empty: $key" -ForegroundColor Red
             $allGood = $false
         }
     }
 
     if ($fm.name) {
-        if ($fm.name -notmatch "^[a-z0-9]+(-[a-z0-9]+)*$") {
-            Write-Host "  [ERROR] Name '$($fm.name)' does not match kebab-case" -ForegroundColor Red
+        if ($fm.name -cnotmatch $namePattern) {
+            Write-Host "  [ERROR] Name '$($fm.name)' does not match the required pattern '$namePattern'" -ForegroundColor Red
             $allGood = $false
         }
         if ($seenNames.ContainsKey($fm.name)) {
@@ -93,9 +155,22 @@ foreach ($file in $skillFiles) {
         }
     }
 
-    if ($fm.version -and $fm.version -notmatch "^\d+\.\d+\.\d+$") {
+    if ($fm.version -and $fm.version -notmatch $versionPattern) {
         Write-Host "  [ERROR] Version '$($fm.version)' is not in MAJOR.MINOR.PATCH format" -ForegroundColor Red
         $allGood = $false
+    }
+
+    if ($fm.status -and $statusEnum -notcontains $fm.status) {
+        Write-Host "  [ERROR] Status '$($fm.status)' is not one of: $($statusEnum -join ', ')" -ForegroundColor Red
+        $allGood = $false
+    }
+
+    if ($fm.tags -is [array]) {
+        $emptyTags = $fm.tags | Where-Object { [string]::IsNullOrWhiteSpace($_) }
+        if ($emptyTags) {
+            Write-Host "  [ERROR] Tags contains empty entries" -ForegroundColor Red
+            $allGood = $false
+        }
     }
 
     $content = Get-Content $file.FullName -Raw
