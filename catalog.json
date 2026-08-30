@@ -29,6 +29,14 @@
           {
             "platform": "openai",
             "path": "adapters/openai/web-research/tool.json"
+          },
+          {
+            "platform": "claude",
+            "path": "adapters/claude/web-research/SKILL.md"
+          },
+          {
+            "platform": "cursor",
+            "path": "adapters/cursor/web-research/SKILL.md"
           }
         ]
       }
