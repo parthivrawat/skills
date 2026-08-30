@@ -12,6 +12,7 @@
         "name",
         "version",
         "description",
+        "category",
         "purpose",
         "scope",
         "triggers",
@@ -46,6 +47,11 @@
           "type": "string",
           "minLength": 1,
           "description": "Short capability description."
+        },
+        "category": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Kebab-case category slug for grouping and discovery."
         },
         "purpose": {
           "type": "string",

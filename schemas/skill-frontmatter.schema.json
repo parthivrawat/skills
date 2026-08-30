@@ -4,7 +4,7 @@
   "title": "Agent Skill Frontmatter",
   "description": "Core metadata schema for a universal agent skill.",
   "type": "object",
-  "required": ["name", "version", "description", "author", "license", "status", "tags"],
+  "required": ["name", "version", "description", "author", "license", "status", "category", "tags"],
   "properties": {
     "name": {
       "type": "string",
@@ -33,6 +33,11 @@
       "type": "string",
       "enum": ["stable", "beta", "alpha", "experimental", "deprecated"],
       "description": "Maturity status."
+    },
+    "category": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Kebab-case category slug for grouping and discovery."
     },
     "tags": {
       "type": "array",

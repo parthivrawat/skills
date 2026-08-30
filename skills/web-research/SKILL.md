@@ -5,6 +5,7 @@ description: Searches the public web for authoritative sources and produces a co
 author: Parthiv Rawat <parthiv05022000@gmail.com>
 license: MIT
 status: stable
+category: development-tools
 tags:
   - web
   - research

@@ -5,6 +5,7 @@ description: <short capability description>
 author: <author-or-organization>
 license: <license>
 status: <stable|beta|alpha|experimental|deprecated>
+category: <category-slug>
 tags:
   - <tag>
   - <tag>

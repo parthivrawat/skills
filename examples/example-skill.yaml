@@ -2,6 +2,7 @@ skill:
   name: web-research
   version: 1.0.0
   description: Searches and synthesizes information from the web.
+  category: development-tools
   purpose: Enables an agent to answer questions by finding, evaluating, and summarizing web sources.
   scope:
     in:

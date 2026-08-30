@@ -9,6 +9,7 @@
         "version": "1.0.0",
         "description": "Searches the public web for authoritative sources and produces a concise, cited answer to a user question.",
         "status": "stable",
+        "category": "development-tools",
         "tags": [
           "web",
           "research",

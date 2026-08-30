@@ -14,3 +14,6 @@ __pycache__/
 dist/
 build/
 *.log
+
+# Skills CLI runtime state
+.skills/

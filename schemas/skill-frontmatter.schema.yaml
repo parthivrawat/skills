@@ -10,6 +10,7 @@ required:
   - author
   - license
   - status
+  - category
   - tags
 properties:
   name:
@@ -39,6 +40,10 @@ properties:
       - experimental
       - deprecated
     description: Maturity status.
+  category:
+    type: string
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+    description: Kebab-case category slug for grouping and discovery.
   tags:
     type: array
     items:
