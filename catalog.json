@@ -39,6 +39,38 @@
             "path": "adapters/cursor/web-research/SKILL.md"
           }
         ]
+      },
+      {
+        "name": "code-review",
+        "version": "1.0.0",
+        "description": "Reviews a code change for correctness, style, security, and maintainability, then produces a structured review report.",
+        "status": "stable",
+        "category": "development-tools",
+        "tags": [
+          "code",
+          "review",
+          "quality",
+          "static-analysis",
+          "collaboration"
+        ],
+        "path": "skills/code-review/SKILL.md",
+        "adapters": []
+      },
+      {
+        "name": "security-audit",
+        "version": "1.0.0",
+        "description": "Reviews a codebase or artifact for security weaknesses, exposed secrets, and known vulnerabilities, then produces a prioritized audit report.",
+        "status": "stable",
+        "category": "security",
+        "tags": [
+          "security",
+          "audit",
+          "vulnerabilities",
+          "secrets",
+          "static-analysis"
+        ],
+        "path": "skills/security-audit/SKILL.md",
+        "adapters": []
       }
     ]
   }

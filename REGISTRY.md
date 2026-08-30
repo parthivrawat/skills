@@ -7,6 +7,8 @@ This file lists the skills and platform adapters in the library.
 | Skill | Version | Status | Tags | Adapters |
 |---|---|---|---|---|
 | [web-research](skills/web-research/SKILL.md) | 1.0.0 | stable | web, research, search, summarization | windsurf, devin, openai, claude, cursor |
+| [code-review](skills/code-review/SKILL.md) | 1.0.0 | stable | code, review, quality, static-analysis, collaboration | — |
+| [security-audit](skills/security-audit/SKILL.md) | 1.0.0 | stable | security, audit, vulnerabilities, secrets, static-analysis | — |
 
 ## Adapters
 
