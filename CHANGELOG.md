@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.0 — 2026-09-02
+
+- Added `document-summarization` skill (v1.0.0).
+- Added `requirements-analysis` skill (v1.0.0).
+- Added `meeting-notes` skill (v1.0.0).
+- Added `email-drafting` skill (v1.0.0).
+- Added `csv-analysis` skill (v1.0.0).
+- Updated `catalog.json` and `REGISTRY.md` with the new skills.
+
 ## 1.0.0 — 2026-08-29
 
 - Initial release of the Universal Agent Skills Library.

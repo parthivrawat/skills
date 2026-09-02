@@ -9,6 +9,11 @@ This file lists the skills and platform adapters in the library.
 | [web-research](skills/web-research/SKILL.md) | 1.0.0 | stable | web, research, search, summarization | windsurf, devin, openai, claude, cursor |
 | [code-review](skills/code-review/SKILL.md) | 1.0.0 | stable | code, review, quality, static-analysis, collaboration | — |
 | [security-audit](skills/security-audit/SKILL.md) | 1.0.0 | stable | security, audit, vulnerabilities, secrets, static-analysis | — |
+| [document-summarization](skills/document-summarization/SKILL.md) | 1.0.0 | stable | documents, summarization, text-analysis, content-processing | — |
+| [requirements-analysis](skills/requirements-analysis/SKILL.md) | 1.0.0 | stable | requirements, analysis, specification, elicitation, planning | — |
+| [meeting-notes](skills/meeting-notes/SKILL.md) | 1.0.0 | stable | meetings, notes, summarization, action-items, collaboration | — |
+| [email-drafting](skills/email-drafting/SKILL.md) | 1.0.0 | stable | email, writing, communication, drafting, productivity | — |
+| [csv-analysis](skills/csv-analysis/SKILL.md) | 1.0.0 | stable | csv, data, analysis, statistics, quality | — |
 
 ## Adapters
 
