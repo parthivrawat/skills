@@ -44,7 +44,7 @@ A complete `SKILL.md` must contain (see `templates/SKILL.md`):
 - Safety and Security (CORE.md reference + skill-specific constraints)
 - Quality Requirements (CORE.md reference + extras)
 - Examples
-- Related Skills (cross-references to skills it composes with; also declare
+- Related Skills [Optional] (cross-references to skills it composes with; also declare
   them in the `related` frontmatter field)
 - Validation
 - Dependencies

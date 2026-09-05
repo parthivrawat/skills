@@ -1,8 +1,6 @@
 # Skill Index
 
-Routing hub for the library. Load this file first to pick a skill, then load
-only that skill's `SKILL.md`. Shared rules live in [_shared/CORE.md](_shared/CORE.md)
-and are inherited by every skill — do not reload them per skill.
+Routing hub for the library. Load this file first to pick a skill, then load `skills/_shared/CORE.md` once, followed by only that skill's `SKILL.md`. Shared rules live in [_shared/CORE.md](_shared/CORE.md) and are inherited by every skill — do not reload them per skill.
 
 ## Skills
 
