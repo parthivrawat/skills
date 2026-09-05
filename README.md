@@ -25,7 +25,14 @@ skills/
 │   ├── SKILL.md
 │   └── platform-adapter.md
 ├── skills/
-│   └── .gitkeep
+│   ├── _index.md            # routing hub: pick a skill, see composition graph
+│   ├── _shared/
+│   │   └── CORE.md          # shared baseline inherited by every skill
+│   └── <skill-name>/
+│       ├── SKILL.md
+│       ├── README.md
+│       ├── examples/
+│       └── tests/
 ├── adapters/
 │   └── .gitkeep
 ├── examples/
@@ -55,6 +62,9 @@ skills/
 - Deterministic procedures where possible
 - Security by default
 - Composability and testability
+- Token-efficient: shared rules live once in `skills/_shared/CORE.md` and are
+  inherited by reference; `skills/_index.md` routes to the right skill and maps
+  cross-skill composition via each skill's `related` frontmatter field
 
 ## Schemas
 

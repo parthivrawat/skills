@@ -17,9 +17,17 @@ When adding a new skill, follow the six-phase workflow:
 - Prefer `<domain>-<capability>` or `<domain>-<object>-<action>`.
 - Examples: `web-research`, `csv-analysis`, `github-issue-triage`.
 
+## Shared Core Contract
+
+Every skill inherits the baseline rules in `skills/_shared/CORE.md` (context
+integrity, baseline decision rule, error handling, safety, quality, validation,
+versioning). Do not restate them in a `SKILL.md` — reference the relevant
+CORE.md section and list only skill-specific additions. This keeps each skill
+small and reduces token consumption when skills are loaded.
+
 ## Required Skill Sections
 
-A complete `SKILL.md` must contain:
+A complete `SKILL.md` must contain (see `templates/SKILL.md`):
 
 - Purpose
 - Scope (In Scope / Out of Scope)
@@ -32,10 +40,12 @@ A complete `SKILL.md` must contain:
 - Procedure
 - Decision Rules
 - Output Contract
-- Error Handling
-- Safety and Security
-- Quality Requirements
+- Error Handling (CORE.md reference + skill-specific failures)
+- Safety and Security (CORE.md reference + skill-specific constraints)
+- Quality Requirements (CORE.md reference + extras)
 - Examples
+- Related Skills (cross-references to skills it composes with; also declare
+  them in the `related` frontmatter field)
 - Validation
 - Dependencies
 - Versioning
