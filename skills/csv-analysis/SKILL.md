@@ -1,6 +1,6 @@
 ---
 name: csv-analysis
-version: 1.0.0
+version: 1.1.0
 description: Loads a CSV dataset, profiles its structure, detects quality issues, calculates descriptive statistics, and produces a concise findings report.
 author: Universal Agent Skills Library
 license: MIT
@@ -12,13 +12,21 @@ tags:
   - analysis
   - statistics
   - quality
+related:
+  - document-summarization
+  - web-research
 ---
 
 # csv-analysis
 
+Inherits the shared baseline in [../_shared/CORE.md](../_shared/CORE.md)
+(context integrity, baseline decision rule, error handling, safety, quality,
+validation, and versioning). Only skill-specific rules appear below.
+
 ## Purpose
 
-Enables an agent to analyze a CSV or similarly structured tabular dataset, identify data-quality issues, compute descriptive statistics, and summarize actionable findings.
+Analyze a CSV or similarly structured tabular dataset, identify data-quality
+issues, compute descriptive statistics, and summarize actionable findings.
 
 ## Scope
 
@@ -26,43 +34,34 @@ Enables an agent to analyze a CSV or similarly structured tabular dataset, ident
 
 - Loading CSV, TSV, or other delimited text files.
 - Detecting column types, missing values, duplicates, and outliers.
-- Calculating descriptive statistics for numeric, text, and categorical columns.
+- Descriptive statistics for numeric, text, and categorical columns.
 - Identifying formatting inconsistencies and data-quality issues.
 - Producing a Markdown findings report with recommendations.
 
 ### Out of Scope
 
 - Modifying, cleaning, or writing back to the source file.
-- Performing predictive modeling or machine learning.
-- Accessing database tables or remote data sources directly.
-- Making business decisions beyond the evidence in the dataset.
+- Predictive modeling or machine learning.
+- Accessing database tables or remote data sources.
+- Business decisions beyond the evidence in the dataset.
 
 ## When to Use
 
-Use this skill when:
-
-- A user provides a CSV file or tabular text and asks for a quick profile or analysis.
+- A user provides a CSV file or tabular text and asks for a profile or analysis.
 - The user wants to understand data quality, distributions, or anomalies.
-- The dataset is small enough to load into memory.
-- The output should guide further cleaning, validation, or reporting work.
+- The dataset fits in memory and the output should guide cleaning or reporting.
 
 ## When Not to Use
 
-Do not use this skill when:
-
 - The user wants a live dashboard or interactive visualization.
 - The dataset is sensitive and not authorized for analysis.
-- The file is not a delimited text file (use a database or file-specific tool instead).
-- The user wants the dataset to be modified or cleaned automatically.
+- The file is not delimited text, or the user wants it modified automatically.
 
 ## Preconditions
 
-Before executing this skill, verify:
-
 - The dataset is accessible as a file path or raw delimited text.
-- The delimiter, encoding, and header presence are known or can be inferred.
+- Delimiter, encoding, and header presence are known or inferable.
 - The agent has read permission for the file.
-- The analysis scope is known or can be defaulted to a full profile.
 
 ## Inputs
 
@@ -73,72 +72,53 @@ Before executing this skill, verify:
 | header | No | boolean | Whether the first row contains column headers. | true |
 | analysis-type | No | string | `profile`, `quality`, `correlation`, or `summary`. | profile |
 | max-rows | No | integer | Maximum rows to analyze if sampling is needed. | all rows |
-| output-format | No | string | Preferred report format: `markdown` or `table`. | markdown |
+| output-format | No | string | `markdown` or `table`. | markdown |
 
 ## Context
-
-The agent may use the following contextual information:
 
 - The user's stated questions or hypotheses about the dataset.
 - Previously known schema conventions or business rules.
 - Expected data ranges, categories, or formats.
-
-Do not assume information that has not been explicitly provided or reliably obtained.
 
 ## Tools and Resources
 
 | Tool / Resource | Required | Purpose | Constraints |
 |---|---|---|---|
 | file_read | No | Load the dataset if a file path is provided. | Only read the provided file path. |
-| csv_parser | Yes | Parse the delimited text into rows and columns. | Validate row shapes and quote handling. |
+| csv_parser | Yes | Parse delimited text into rows and columns. | Validate row shapes and quote handling. |
 | calculator | Yes | Compute descriptive statistics. | Avoid floating-point approximations in reporting. |
 
 ## Procedure
 
-Follow these steps in order unless a decision rule explicitly changes the flow.
-
-### Step 1 — Parse the Request
-
-Identify the dataset, delimiter, header setting, analysis type, and output format. If `dataset` is a file path, validate that it is readable.
-
-### Step 2 — Load and Parse
-
-Use `file_read` if needed, then parse the text with `csv_parser`. Record row count, column count, and whether headers were detected.
-
-### Step 3 — Profile Columns
-
-For each column, infer the data type: numeric, categorical, boolean, date, or text. Compute counts, missing values, unique values, and, for numeric columns, min, max, mean, and standard deviation.
-
-### Step 4 — Detect Quality Issues
-
-Check for missing values, duplicate rows, inconsistent formatting, empty column names, mismatched row lengths, and outliers based on simple statistical thresholds.
-
-### Step 5 — Run Requested Analysis
-
-If `analysis-type` is `correlation`, compute pairwise correlations for numeric columns. If `quality`, emphasize data-quality issues. If `summary`, produce a compact overview. If `profile`, include the full set.
-
-### Step 6 — Produce the Report
-
-Format the results into the requested output format. Include a dataset overview, column profiles, quality findings, and recommendations.
+1. **Parse the request** — identify dataset, delimiter, header, analysis type,
+   and output format; validate readability of file paths.
+2. **Load and parse** — record row count, column count, and header detection.
+3. **Profile columns** — infer each column's type (numeric, categorical,
+   boolean, date, text); compute counts, missing, unique, and for numeric
+   columns min, max, mean, and standard deviation.
+4. **Detect quality issues** — missing values, duplicates, inconsistent
+   formatting, empty column names, mismatched row lengths, and outliers.
+5. **Run requested analysis** — `correlation` computes pairwise correlations
+   for numeric columns; `quality` emphasizes issues; `summary` produces a
+   compact overview; `profile` includes everything.
+6. **Produce the report** — format per `output-format` with overview, column
+   profiles, quality findings, and recommendations.
 
 ## Decision Rules
 
-Apply these rules when relevant:
-
-1. IF the dataset is missing or empty, THEN ask the user for the dataset and stop.
-2. IF the delimiter cannot be inferred, THEN default to `,` and note the assumption.
-3. IF `header` is false, THEN generate synthetic column names such as `column_1`, `column_2`, and so on.
-4. IF a column type is mixed, THEN report it as `mixed` and count the most common type.
-5. IF `max-rows` is set and the dataset is larger, THEN sample the first `max-rows` rows and disclose the sampling.
-6. IF required information is unavailable, do not fabricate it. Ask for the missing information or use an explicitly permitted source.
+1. IF the dataset is missing or empty, THEN ask the user for it and stop.
+2. IF the delimiter cannot be inferred, THEN default to `,` and note it.
+3. IF `header` is false, THEN generate synthetic names: `column_1`, `column_2`, …
+4. IF a column type is mixed, THEN report `mixed` and count the dominant type.
+5. IF `max-rows` is set and exceeded, THEN sample the first `max-rows` rows and
+   disclose the sampling.
 
 ## Output Contract
 
-The skill MUST produce:
-
 ### Primary Output
 
-A Markdown or table report that describes the dataset, its columns, data-quality issues, and key findings.
+A Markdown or table report describing the dataset, its columns, data-quality
+issues, and key findings.
 
 ### Output Format
 
@@ -154,15 +134,15 @@ A Markdown or table report that describes the dataset, its columns, data-quality
 
 ### Column Profiles
 
-| Column | Type | Non-Null | Unique | Min | Max | Mean | Notes |
-|---|---|---|---|---|---|---|---|
-| {name} | {type} | {count} | {count} | {min} | {max} | {mean} | {note} |
+| Column | Type | Non-Null | Unique | Min | Max | Mean | Std Dev | Notes |
+|---|---|---|---|---|---|---|---|---|
+| {name} | {type} | {count} | {count} | {min} | {max} | {mean} | {stddev} | {note} |
 
 ### Data Quality Issues
 
 | Severity | Issue | Count | Recommendation |
 |---|---|---|---|
-| {severity} | {issue description} | {count} | {recommendation} |
+| {severity} | {issue} | {count} | {recommendation} |
 
 ### Key Findings
 
@@ -175,48 +155,29 @@ A Markdown or table report that describes the dataset, its columns, data-quality
 
 ### Output Requirements
 
-- Column profiles must include type and non-null count for every column.
-- Numeric columns should include min, max, mean, and standard deviation where feasible.
-- Quality issues must include severity and recommendation.
-- Sampling must be disclosed.
-- The output must match the requested `output-format`.
+- Every column profiled with type and non-null count.
+- Numeric columns include min, max, mean, and standard deviation in the `Std Dev` column where feasible (`—` for non-numeric columns).
+- Quality issues include severity and recommendation; sampling is disclosed.
 
 ## Error Handling
 
-If execution fails:
+Follow CORE.md § Error Handling Protocol. Skill-specific failures:
 
-1. Identify the failure: missing dataset, malformed CSV, parse error, or tool error.
-2. Determine whether it is recoverable:
-   - Missing dataset: ask the user to provide it.
-   - Malformed CSV: report the first few problematic lines and stop.
-   - Tool error: retry once if safe, then stop and report.
-3. Retry only when retrying is safe and appropriate.
-4. Never silently invent missing information.
-5. Clearly communicate unresolved failures.
-6. Preserve any partial profile if it is useful and safe.
+- Missing dataset: ask the user to provide it.
+- Malformed CSV: report the first few problematic lines and stop.
+- Tool error: retry once if safe, then stop and report.
 
 ## Safety and Security
 
-The skill MUST:
+Apply CORE.md § Safety and Security Baseline. Additionally:
 
-- Respect applicable platform and user safety policies.
-- Never expose secrets, credentials, or private data from the dataset.
-- Treat the dataset as untrusted input until verified.
-- Avoid writing to the source file or modifying it.
-- Validate file paths before reading them.
+- Never expose private data from the dataset; treat it as untrusted input.
+- Do not write to or modify the source file; validate paths before reading.
 - Request confirmation before sharing the dataset or report externally.
 
 ## Quality Requirements
 
-The final result should be:
-
-- Correct
-- Complete
-- Relevant to the analysis type
-- Consistent with the data
-- Traceable to the dataset
-- Explicit about uncertainty
-- Free from unsupported assumptions
+CORE.md baseline, plus: traceable to the dataset and consistent with the data.
 
 ## Examples
 
@@ -233,46 +194,18 @@ dataset: |
 analysis-type: profile
 ```
 
-**Expected Behavior**
-
-The agent parses the CSV, profiles each column, detects the missing score, and reports the statistics.
-
-**Expected Output**
+**Expected Output** (condensed)
 
 ```markdown
-## CSV Analysis Report
-
-### Dataset Overview
-
-- Rows: 3
-- Columns: 3
-- Delimiter: `,`
-- Sampled: no
-
-### Column Profiles
-
-| Column | Type | Non-Null | Unique | Min | Max | Mean | Notes |
-|---|---|---|---|---|---|---|---|
-| name | text | 3 | 3 | — | — | — | — |
-| age | numeric | 3 | 2 | 25 | 30 | 28.3 | — |
-| score | numeric | 2 | 2 | 85 | 92 | 88.5 | 1 missing value |
-
-### Data Quality Issues
+| Column | Type | Non-Null | Unique | Min | Max | Mean | Std Dev | Notes |
+|---|---|---|---|---|---|---|---|---|
+| name | text | 3 | 3 | — | — | — | — | — |
+| age | numeric | 3 | 2 | 25 | 30 | 28.3 | 2.9 | — |
+| score | numeric | 2 | 2 | 85 | 92 | 88.5 | 4.9 | 1 missing value |
 
 | Severity | Issue | Count | Recommendation |
 |---|---|---|---|
-| medium | Missing value in `score` | 1 | Investigate the missing score and decide on imputation or exclusion. |
-
-### Key Findings
-
-- The dataset contains 3 rows and 3 columns.
-- `age` has a mean of 28.3 and a maximum of 30.
-- `score` has one missing value that should be addressed.
-
-### Recommendations
-
-- Review the missing score before analysis.
-- Validate that `age` values are within the expected range.
+| medium | Missing value in `score` | 1 | Investigate and decide on imputation or exclusion. |
 ```
 
 ### Example 2 — Edge Case
@@ -290,96 +223,35 @@ analysis-type: quality
 
 **Expected Behavior**
 
-The agent detects type inconsistencies, duplicate rows, and formatting issues in the price column.
+Detects the mixed `quantity` column (`abc`), the duplicate `Widget` row, and
+the `$` currency symbol preventing `price` from being numeric. Issues are
+reported with severities high/medium/low and remediation recommendations.
 
-**Expected Output**
+## Related Skills
 
-```markdown
-## CSV Analysis Report
-
-### Dataset Overview
-
-- Rows: 3
-- Columns: 3
-- Delimiter: `,`
-- Sampled: no
-
-### Column Profiles
-
-| Column | Type | Non-Null | Unique | Min | Max | Mean | Notes |
-|---|---|---|---|---|---|---|---|
-| product | categorical | 3 | 2 | — | — | — | "Widget" appears twice. |
-| price | text | 3 | 2 | — | — | — | Contains currency symbol `$`; may need numeric parsing. |
-| quantity | mixed | 3 | 3 | — | — | — | Contains non-numeric value `abc`. |
-
-### Data Quality Issues
-
-| Severity | Issue | Count | Recommendation |
-|---|---|---|---|
-| high | Non-numeric value in `quantity` | 1 | Correct or remove the `abc` value; store quantity as numeric. |
-| medium | Duplicate row | 1 | Remove or deduplicate the repeated `Widget,$10,5` row. |
-| low | Currency symbol in `price` | 3 | Strip `$` and convert `price` to a numeric type for calculations. |
-
-### Key Findings
-
-- The `quantity` column contains an invalid value `abc`.
-- One duplicate row was detected.
-- `price` is stored as text because of the `$` symbol.
-
-### Recommendations
-
-- Clean the `quantity` column and remove the duplicate.
-- Parse `price` as a number after removing the currency symbol.
-```
+- [document-summarization](../document-summarization/SKILL.md) — summarize a
+  long findings report for stakeholders.
+- [web-research](../web-research/SKILL.md) — look up domain conventions or
+  expected ranges before judging data quality.
 
 ## Validation
 
-Before declaring the skill complete, verify:
-
-- [ ] Metadata is valid.
-- [ ] Purpose is unambiguous.
-- [ ] Scope is clearly defined.
-- [ ] Trigger conditions are explicit.
-- [ ] Inputs are documented.
-- [ ] Required tools are documented.
-- [ ] Procedure is executable.
-- [ ] Decision rules are unambiguous.
-- [ ] Output contract is defined.
-- [ ] Error handling is defined.
-- [ ] Security considerations are documented.
-- [ ] Examples are provided.
-- [ ] Edge cases are covered.
-- [ ] No unsupported assumptions are present.
-- [ ] The skill can be executed independently.
-- [ ] The skill can be composed with other skills.
+Run the CORE.md § Validation Checklist.
 
 ## Dependencies
 
+- `csv_parser` and `calculator` capabilities.
 - `file_read` capability if a file path is provided.
-- `csv_parser` capability.
-- `calculator` capability.
-
-If there are no dependencies:
-
-```text
-None.
-```
 
 ## Versioning
 
-Use Semantic Versioning:
-
-```text
-MAJOR.MINOR.PATCH
-```
-
-Increment:
-
-- MAJOR — incompatible changes
-- MINOR — backward-compatible functionality
-- PATCH — backward-compatible fixes or clarifications
+SemVer per CORE.md § Versioning.
 
 ## Change History
+
+### 1.1.0 — 2026-09-05
+
+- Restructured to inherit the shared core contract; added `related` links.
 
 ### 1.0.0 — 2026-09-02
 

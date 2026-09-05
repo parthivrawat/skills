@@ -1,156 +1,203 @@
 {
-  "library": {
-    "name": "Universal Agent Skills Library",
-    "version": "1.1.0",
-    "last_updated": "2026-09-02",
-    "skills": [
-      {
-        "name": "web-research",
-        "version": "1.0.0",
-        "description": "Searches the public web for authoritative sources and produces a concise, cited answer to a user question.",
-        "status": "stable",
-        "category": "development-tools",
-        "tags": [
-          "web",
-          "research",
-          "search",
-          "summarization"
-        ],
-        "path": "skills/web-research/SKILL.md",
-        "adapters": [
-          {
-            "platform": "windsurf",
-            "path": "adapters/windsurf/web-research/SKILL.md"
-          },
-          {
-            "platform": "devin",
-            "path": "adapters/devin/web-research/SKILL.md"
-          },
-          {
-            "platform": "openai",
-            "path": "adapters/openai/web-research/tool.json"
-          },
-          {
-            "platform": "claude",
-            "path": "adapters/claude/web-research/SKILL.md"
-          },
-          {
-            "platform": "cursor",
-            "path": "adapters/cursor/web-research/SKILL.md"
-          }
-        ]
-      },
-      {
-        "name": "code-review",
-        "version": "1.0.0",
-        "description": "Reviews a code change for correctness, style, security, and maintainability, then produces a structured review report.",
-        "status": "stable",
-        "category": "development-tools",
-        "tags": [
-          "code",
-          "review",
-          "quality",
-          "static-analysis",
-          "collaboration"
-        ],
-        "path": "skills/code-review/SKILL.md",
-        "adapters": []
-      },
-      {
-        "name": "security-audit",
-        "version": "1.0.0",
-        "description": "Reviews a codebase or artifact for security weaknesses, exposed secrets, and known vulnerabilities, then produces a prioritized audit report.",
-        "status": "stable",
-        "category": "security",
-        "tags": [
-          "security",
-          "audit",
-          "vulnerabilities",
-          "secrets",
-          "static-analysis"
-        ],
-        "path": "skills/security-audit/SKILL.md",
-        "adapters": []
-      },
-      {
-        "name": "document-summarization",
-        "version": "1.0.0",
-        "description": "Reads a document and produces a concise, accurate summary that preserves key facts, tone, and intent.",
-        "status": "stable",
-        "category": "content-processing",
-        "tags": [
-          "documents",
-          "summarization",
-          "text-analysis",
-          "content-processing"
-        ],
-        "path": "skills/document-summarization/SKILL.md",
-        "adapters": []
-      },
-      {
-        "name": "requirements-analysis",
-        "version": "1.0.0",
-        "description": "Transforms informal requests into clear, structured requirements with acceptance criteria, assumptions, and open questions.",
-        "status": "stable",
-        "category": "requirements-engineering",
-        "tags": [
-          "requirements",
-          "analysis",
-          "specification",
-          "elicitation",
-          "planning"
-        ],
-        "path": "skills/requirements-analysis/SKILL.md",
-        "adapters": []
-      },
-      {
-        "name": "meeting-notes",
-        "version": "1.0.0",
-        "description": "Converts a meeting transcript or raw notes into a structured summary with decisions, action items, and open questions.",
-        "status": "stable",
-        "category": "productivity",
-        "tags": [
-          "meetings",
-          "notes",
-          "summarization",
-          "action-items",
-          "collaboration"
-        ],
-        "path": "skills/meeting-notes/SKILL.md",
-        "adapters": []
-      },
-      {
-        "name": "email-drafting",
-        "version": "1.0.0",
-        "description": "Drafts professional emails from a stated intent, recipient, and key points, producing a ready-to-review subject and body.",
-        "status": "stable",
-        "category": "communication",
-        "tags": [
-          "email",
-          "writing",
-          "communication",
-          "drafting",
-          "productivity"
-        ],
-        "path": "skills/email-drafting/SKILL.md",
-        "adapters": []
-      },
-      {
-        "name": "csv-analysis",
-        "version": "1.0.0",
-        "description": "Loads a CSV dataset, profiles its structure, detects quality issues, calculates descriptive statistics, and produces a concise findings report.",
-        "status": "stable",
-        "category": "data-analysis",
-        "tags": [
-          "csv",
-          "data",
-          "analysis",
-          "statistics",
-          "quality"
-        ],
-        "path": "skills/csv-analysis/SKILL.md",
-        "adapters": []
-      }
-    ]
-  }
+    "library":  {
+                    "name":  "Universal Agent Skills Library",
+                    "version":  "1.1.0",
+                    "last_updated":  "2026-09-05",
+                    "skills":  [
+                                   {
+                                       "name":  "web-research",
+                                       "version":  "1.1.0",
+                                       "description":  "Searches the public web for authoritative sources and produces a concise, cited answer to a user question.",
+                                       "status":  "stable",
+                                       "category":  "development-tools",
+                                       "tags":  [
+                                                    "web",
+                                                    "research",
+                                                    "search",
+                                                    "summarization"
+                                                ],
+                                       "path":  "skills/web-research/SKILL.md",
+                                       "adapters":  [
+                                                        {
+                                                            "platform":  "windsurf",
+                                                            "path":  "adapters/windsurf/web-research/SKILL.md"
+                                                        },
+                                                        {
+                                                            "platform":  "devin",
+                                                            "path":  "adapters/devin/web-research/SKILL.md"
+                                                        },
+                                                        {
+                                                            "platform":  "openai",
+                                                            "path":  "adapters/openai/web-research/tool.json"
+                                                        },
+                                                        {
+                                                            "platform":  "claude",
+                                                            "path":  "adapters/claude/web-research/SKILL.md"
+                                                        },
+                                                        {
+                                                            "platform":  "cursor",
+                                                            "path":  "adapters/cursor/web-research/SKILL.md"
+                                                        }
+                                                    ],
+                                       "related":  [
+                                                       "document-summarization",
+                                                       "csv-analysis"
+                                                   ]
+                                   },
+                                   {
+                                       "name":  "code-review",
+                                       "version":  "1.1.0",
+                                       "description":  "Reviews a code change for correctness, style, security, and maintainability, then produces a structured review report.",
+                                       "status":  "stable",
+                                       "category":  "development-tools",
+                                       "tags":  [
+                                                    "code",
+                                                    "review",
+                                                    "quality",
+                                                    "static-analysis",
+                                                    "collaboration"
+                                                ],
+                                       "path":  "skills/code-review/SKILL.md",
+                                       "adapters":  [
+
+                                                    ],
+                                       "related":  [
+                                                       "security-audit",
+                                                       "requirements-analysis"
+                                                   ]
+                                   },
+                                   {
+                                       "name":  "security-audit",
+                                       "version":  "1.1.0",
+                                       "description":  "Reviews a codebase or artifact for security weaknesses, exposed secrets, and known vulnerabilities, then produces a prioritized audit report.",
+                                       "status":  "stable",
+                                       "category":  "security",
+                                       "tags":  [
+                                                    "security",
+                                                    "audit",
+                                                    "vulnerabilities",
+                                                    "secrets",
+                                                    "static-analysis"
+                                                ],
+                                       "path":  "skills/security-audit/SKILL.md",
+                                       "adapters":  [
+
+                                                    ],
+                                       "related":  [
+                                                       "code-review"
+                                                   ]
+                                   },
+                                   {
+                                       "name":  "document-summarization",
+                                       "version":  "1.1.0",
+                                       "description":  "Reads a document and produces a concise, accurate summary that preserves key facts, tone, and intent.",
+                                       "status":  "stable",
+                                       "category":  "content-processing",
+                                       "tags":  [
+                                                    "documents",
+                                                    "summarization",
+                                                    "text-analysis",
+                                                    "content-processing"
+                                                ],
+                                       "path":  "skills/document-summarization/SKILL.md",
+                                       "adapters":  [
+
+                                                    ],
+                                       "related":  [
+                                                       "meeting-notes",
+                                                       "email-drafting",
+                                                       "web-research"
+                                                   ]
+                                   },
+                                   {
+                                       "name":  "requirements-analysis",
+                                       "version":  "1.1.0",
+                                       "description":  "Transforms informal requests into clear, structured requirements with acceptance criteria, assumptions, and open questions.",
+                                       "status":  "stable",
+                                       "category":  "requirements-engineering",
+                                       "tags":  [
+                                                    "requirements",
+                                                    "analysis",
+                                                    "specification",
+                                                    "elicitation",
+                                                    "planning"
+                                                ],
+                                       "path":  "skills/requirements-analysis/SKILL.md",
+                                       "adapters":  [
+
+                                                    ],
+                                       "related":  [
+                                                       "meeting-notes",
+                                                       "code-review"
+                                                   ]
+                                   },
+                                   {
+                                       "name":  "meeting-notes",
+                                       "version":  "1.1.0",
+                                       "description":  "Converts a meeting transcript or raw notes into a structured summary with decisions, action items, and open questions.",
+                                       "status":  "stable",
+                                       "category":  "productivity",
+                                       "tags":  [
+                                                    "meetings",
+                                                    "notes",
+                                                    "summarization",
+                                                    "action-items",
+                                                    "collaboration"
+                                                ],
+                                       "path":  "skills/meeting-notes/SKILL.md",
+                                       "adapters":  [
+
+                                                    ],
+                                       "related":  [
+                                                       "email-drafting",
+                                                       "requirements-analysis",
+                                                       "document-summarization"
+                                                   ]
+                                   },
+                                   {
+                                       "name":  "email-drafting",
+                                       "version":  "1.1.0",
+                                       "description":  "Drafts professional emails from a stated intent, recipient, and key points, producing a ready-to-review subject and body.",
+                                       "status":  "stable",
+                                       "category":  "communication",
+                                       "tags":  [
+                                                    "email",
+                                                    "writing",
+                                                    "communication",
+                                                    "drafting",
+                                                    "productivity"
+                                                ],
+                                       "path":  "skills/email-drafting/SKILL.md",
+                                       "adapters":  [
+
+                                                    ],
+                                       "related":  [
+                                                       "meeting-notes",
+                                                       "document-summarization"
+                                                   ]
+                                   },
+                                   {
+                                       "name":  "csv-analysis",
+                                       "version":  "1.1.0",
+                                       "description":  "Loads a CSV dataset, profiles its structure, detects quality issues, calculates descriptive statistics, and produces a concise findings report.",
+                                       "status":  "stable",
+                                       "category":  "data-analysis",
+                                       "tags":  [
+                                                    "csv",
+                                                    "data",
+                                                    "analysis",
+                                                    "statistics",
+                                                    "quality"
+                                                ],
+                                       "path":  "skills/csv-analysis/SKILL.md",
+                                       "adapters":  [
+
+                                                    ],
+                                       "related":  [
+                                                       "document-summarization",
+                                                       "web-research"
+                                                   ]
+                                   }
+                               ]
+                }
 }
