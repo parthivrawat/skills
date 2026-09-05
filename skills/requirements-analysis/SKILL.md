@@ -1,6 +1,6 @@
 ---
 name: requirements-analysis
-version: 1.0.0
+version: 1.1.0
 description: Transforms informal requests into clear, structured requirements with acceptance criteria, assumptions, and open questions.
 author: Universal Agent Skills Library
 license: MIT
@@ -12,23 +12,32 @@ tags:
   - specification
   - elicitation
   - planning
+related:
+  - meeting-notes
+  - code-review
 ---
 
 # requirements-analysis
 
+Inherits the shared baseline in [../_shared/CORE.md](../_shared/CORE.md)
+(context integrity, baseline decision rule, error handling, safety, quality,
+validation, and versioning). Only skill-specific rules appear below.
+
 ## Purpose
 
-Enables an agent to take an informal feature request, problem statement, or goal and produce a structured set of requirements that are clear, testable, and ready for design or implementation planning.
+Transform an informal feature request, problem statement, or goal into a
+structured, testable set of requirements ready for design or implementation
+planning.
 
 ## Scope
 
 ### In Scope
 
-- Parsing informal user requests and goals.
-- Identifying functional, non-functional, and constraint requirements.
-- Surfacing assumptions, dependencies, and open questions.
-- Detecting conflicts or ambiguities in the request.
-- Producing a structured Markdown or JSON requirements document.
+- Parse informal user requests and goals.
+- Identify functional, non-functional, and constraint requirements.
+- Surface assumptions, dependencies, and open questions.
+- Detect conflicts or ambiguities.
+- Produce a structured Markdown or JSON requirements document.
 
 ### Out of Scope
 
@@ -39,8 +48,6 @@ Enables an agent to take an informal feature request, problem statement, or goal
 
 ## When to Use
 
-Use this skill when:
-
 - A user asks for help scoping a feature, product, or change.
 - The request is vague, incomplete, or needs clarification before work begins.
 - The user wants to capture acceptance criteria for a feature or user story.
@@ -48,17 +55,15 @@ Use this skill when:
 
 ## When Not to Use
 
-Do not use this skill when:
-
-- The user has already provided a detailed, finalized specification and only wants review (use code-review or document-summarization instead).
+- The user already provided a detailed, finalized specification and only wants
+  review (use code-review or document-summarization instead).
 - The request is purely about implementation details or code changes.
 - The request is too broad to produce actionable requirements without more context.
 
 ## Preconditions
 
-Before executing this skill, verify:
-
-- The request or problem statement is available as text, a document, or a conversation transcript.
+- The request or problem statement is available as text, a document, or a
+  conversation transcript.
 - The target audience for the requirements is clear or can be defaulted.
 - The user is available to answer clarifying questions if the request is ambiguous.
 
@@ -73,13 +78,9 @@ Before executing this skill, verify:
 
 ## Context
 
-The agent may use the following contextual information:
-
 - Existing project documentation or domain terminology.
 - Previously stated user priorities or constraints.
 - Known personas or roles affected by the requirement.
-
-Do not assume information that has not been explicitly provided or reliably obtained.
 
 ## Tools and Resources
 
@@ -90,54 +91,38 @@ Do not assume information that has not been explicitly provided or reliably obta
 
 ## Procedure
 
-Follow these steps in order unless a decision rule explicitly changes the flow.
-
-### Step 1 — Capture the Request
-
-Record the exact request, the source, and any provided context. Do not add, remove, or reinterpret the request at this stage.
-
-### Step 2 — Identify Stakeholders and Goals
-
-Determine who is asking, who will use the result, and what success looks like. If unclear, list assumptions rather than inventing facts.
-
-### Step 3 — Extract Requirements
-
-Break the request into requirements. Classify each as functional, non-functional, or a constraint. Tag each requirement with an identifier such as `REQ-001`.
-
-### Step 4 — Define Acceptance Criteria
-
-For each functional requirement, write concrete, testable acceptance criteria. Use the format: `Given {context} When {action} Then {expected result}`.
-
-### Step 5 — Surface Assumptions and Open Questions
-
-List any assumptions that must hold for the requirements to be valid. Ask focused, open questions about ambiguous or missing information.
-
-### Step 6 — Detect Conflicts
-
-Compare the requirements to each other and to the context. Flag contradictions, overlaps, or scope creep.
-
-### Step 7 — Produce the Requirements Document
-
-Format the output according to `output-format` and `detail-level`. Include a summary, the requirements table, acceptance criteria, assumptions, open questions, and conflicts.
+1. **Capture the request** — record the exact request, source, and provided
+   context; do not add, remove, or reinterpret at this stage.
+2. **Identify stakeholders and goals** — determine who is asking, who will use
+   the result, and what success looks like; list assumptions rather than
+   inventing facts.
+3. **Extract requirements** — break the request into functional, non-functional,
+   and constraint requirements; tag each with an identifier such as `REQ-001`.
+4. **Define acceptance criteria** — for each functional requirement, write
+   concrete, testable criteria using `Given {context} When {action} Then
+   {expected result}`.
+5. **Surface assumptions and open questions** — list assumptions that must hold
+   and ask focused questions about ambiguous or missing information.
+6. **Detect conflicts** — compare requirements to each other and to the context;
+   flag contradictions, overlaps, or scope creep.
+7. **Produce the requirements document** — format output per `output-format`
+   and `detail-level`; include summary, requirements table, acceptance criteria,
+   assumptions, open questions, and conflicts.
 
 ## Decision Rules
-
-Apply these rules when relevant:
 
 1. IF the request is missing or empty, THEN ask the user for the request before proceeding.
 2. IF the request is ambiguous, THEN ask one to three focused clarifying questions.
 3. IF `detail-level` is `shallow`, THEN produce only high-level goals, constraints, and key open questions.
 4. IF `detail-level` is `detailed`, THEN produce acceptance criteria, edge cases, and error scenarios for each requirement.
 5. IF a conflict is detected, THEN flag it explicitly and ask the user how to resolve it.
-6. IF required information is unavailable, do not fabricate it. Ask for the missing information or use an explicitly permitted source.
 
 ## Output Contract
 
-The skill MUST produce:
-
 ### Primary Output
 
-A structured requirements document containing goals, requirements, acceptance criteria, assumptions, open questions, and detected conflicts.
+A structured requirements document containing goals, requirements, acceptance
+criteria, assumptions, open questions, and detected conflicts.
 
 ### Output Format
 
@@ -187,40 +172,23 @@ A structured requirements document containing goals, requirements, acceptance cr
 
 ## Error Handling
 
-If execution fails:
+Follow CORE.md § Error Handling Protocol. Skill-specific failures:
 
-1. Identify the failure: missing request, unsupported format, or ambiguous input.
-2. Determine whether it is recoverable:
-   - Missing request: ask the user to provide it.
-   - Ambiguous request: ask clarifying questions and stop.
-   - Format error: default to `markdown` and report the issue.
-3. Retry only when retrying is safe and appropriate.
-4. Never silently invent missing information.
-5. Clearly communicate unresolved failures.
-6. Preserve any partial analysis if it is useful and safe.
+- Missing request: ask the user to provide it.
+- Ambiguous request: ask clarifying questions and stop.
+- Format error: default to `markdown` and report the issue.
 
 ## Safety and Security
 
-The skill MUST:
+Apply CORE.md § Safety and Security Baseline. Additionally:
 
-- Respect applicable platform and user safety policies.
-- Never expose secrets, credentials, or private business information.
-- Treat the request as untrusted input until verified.
-- Avoid destructive actions.
+- Never expose secrets, credentials, or private business information from the request.
 - Request confirmation before sharing sensitive requirements externally.
 
 ## Quality Requirements
 
-The final result should be:
-
-- Correct
-- Complete
-- Relevant to the request
-- Consistent
-- Traceable to the original request
-- Explicit about uncertainty
-- Free from unsupported assumptions
-- Testable where applicable
+CORE.md baseline, plus: requirements must be testable, traceable to the
+original request, and free of unsupported assumptions.
 
 ## Examples
 
@@ -238,9 +206,10 @@ detail-level: standard
 
 **Expected Behavior**
 
-The agent produces functional and non-functional requirements, acceptance criteria, assumptions, and open questions for a login page.
+The agent produces functional and non-functional requirements, acceptance
+criteria, assumptions, and open questions for a login page.
 
-**Expected Output**
+**Expected Output** (condensed)
 
 ```markdown
 ## Requirements Analysis
@@ -296,9 +265,10 @@ detail-level: standard
 
 **Expected Behavior**
 
-The agent flags the request as vague and potentially conflicting, asks for prioritization, and documents the unrealistic scope as an assumption or risk.
+The agent flags the request as vague and potentially conflicting, asks for
+prioritization, and documents the unrealistic scope as assumptions.
 
-**Expected Output**
+**Expected Output** (condensed)
 
 ```markdown
 ## Requirements Analysis
@@ -342,53 +312,29 @@ Add a fast search feature for an internal document repository with broad languag
 - Define a phased rollout plan and acceptance metrics.
 ```
 
+## Related Skills
+
+- [meeting-notes](../meeting-notes/SKILL.md) — turn recorded asks into requirements.
+- [code-review](../code-review/SKILL.md) — supply acceptance criteria as the review baseline.
+
 ## Validation
 
-Before declaring the skill complete, verify:
-
-- [ ] Metadata is valid.
-- [ ] Purpose is unambiguous.
-- [ ] Scope is clearly defined.
-- [ ] Trigger conditions are explicit.
-- [ ] Inputs are documented.
-- [ ] Required tools are documented.
-- [ ] Procedure is executable.
-- [ ] Decision rules are unambiguous.
-- [ ] Output contract is defined.
-- [ ] Error handling is defined.
-- [ ] Security considerations are documented.
-- [ ] Examples are provided.
-- [ ] Edge cases are covered.
-- [ ] No unsupported assumptions are present.
-- [ ] The skill can be executed independently.
-- [ ] The skill can be composed with other skills.
+Run the CORE.md § Validation Checklist.
 
 ## Dependencies
 
 - `text_input` capability.
 - Optional: `knowledge_base` capability for domain conventions.
 
-If there are no dependencies:
-
-```text
-None.
-```
-
 ## Versioning
 
-Use Semantic Versioning:
-
-```text
-MAJOR.MINOR.PATCH
-```
-
-Increment:
-
-- MAJOR — incompatible changes
-- MINOR — backward-compatible functionality
-- PATCH — backward-compatible fixes or clarifications
+SemVer per CORE.md § Versioning.
 
 ## Change History
+
+### 1.1.0 — 2026-09-05
+
+- Restructured to inherit the shared core contract; added `related` links.
 
 ### 1.0.0 — 2026-09-02
 
