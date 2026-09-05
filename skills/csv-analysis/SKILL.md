@@ -134,9 +134,9 @@ issues, and key findings.
 
 ### Column Profiles
 
-| Column | Type | Non-Null | Unique | Min | Max | Mean | Notes |
-|---|---|---|---|---|---|---|---|
-| {name} | {type} | {count} | {count} | {min} | {max} | {mean} | {note} |
+| Column | Type | Non-Null | Unique | Min | Max | Mean | Std Dev | Notes |
+|---|---|---|---|---|---|---|---|---|
+| {name} | {type} | {count} | {count} | {min} | {max} | {mean} | {stddev} | {note} |
 
 ### Data Quality Issues
 
@@ -156,7 +156,7 @@ issues, and key findings.
 ### Output Requirements
 
 - Every column profiled with type and non-null count.
-- Numeric columns include min, max, mean, and standard deviation where feasible.
+- Numeric columns include min, max, mean, and standard deviation in the `Std Dev` column where feasible (`—` for non-numeric columns).
 - Quality issues include severity and recommendation; sampling is disclosed.
 
 ## Error Handling
@@ -197,11 +197,11 @@ analysis-type: profile
 **Expected Output** (condensed)
 
 ```markdown
-| Column | Type | Non-Null | Unique | Min | Max | Mean | Notes |
-|---|---|---|---|---|---|---|---|
-| name | text | 3 | 3 | — | — | — | — |
-| age | numeric | 3 | 2 | 25 | 30 | 28.3 | — |
-| score | numeric | 2 | 2 | 85 | 92 | 88.5 | 1 missing value |
+| Column | Type | Non-Null | Unique | Min | Max | Mean | Std Dev | Notes |
+|---|---|---|---|---|---|---|---|---|
+| name | text | 3 | 3 | — | — | — | — | — |
+| age | numeric | 3 | 2 | 25 | 30 | 28.3 | 2.9 | — |
+| score | numeric | 2 | 2 | 85 | 92 | 88.5 | 4.9 | 1 missing value |
 
 | Severity | Issue | Count | Recommendation |
 |---|---|---|---|

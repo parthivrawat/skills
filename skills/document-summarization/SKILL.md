@@ -35,7 +35,7 @@ Produce a concise, accurate summary of a document or passage that captures the m
 - Paragraph, bullet, or key-point output formats.
 - Preserving original tone and factual claims.
 - Identifying key entities, claims, and conclusions.
-- Indicating confidence and limitations when the source is unclear.
+- Always indicating confidence and limitations in the output.
 
 ### Out of Scope
 
@@ -95,7 +95,7 @@ Produce a concise, accurate summary of a document or passage that captures the m
 2. **Load the document** — read the file path if provided, or use raw text. Record the source and any metadata.
 3. **Analyze the content** — segment the document; identify main claim, supporting points, key entities, conclusions, and any uncertainty or caveats.
 4. **Generate the summary** — condense into the requested format and length. Preserve meaning and tone. If `focus` is set, emphasize that theme while still covering the main point.
-5. **Add supporting elements** — if `include-quotes` is true, append one or two short, relevant quotes with source references. Add a confidence label and limitations statement if source quality or completeness is uncertain.
+5. **Add supporting elements** — if `include-quotes` is true, append one or two short, relevant quotes with source references. Always add a confidence label and a limitations statement; use `None identified.` when no limitations exist.
 
 ## Decision Rules
 

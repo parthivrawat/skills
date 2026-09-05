@@ -151,10 +151,10 @@ Follow CORE.md § Error Handling Protocol. Skill-specific failures:
 
 Apply CORE.md § Safety and Security Baseline. Additionally:
 
-- Never expose secrets, credentials, or private information in the draft.
+- Never expose secrets or credentials in the draft.
+- Include sensitive personal or business information only after explicit user confirmation.
 - Avoid drafting harmful, deceptive, or unauthorized content.
 - Never send the email or access external mail systems.
-- Request confirmation before including sensitive personal or business information.
 
 ## Quality Requirements
 
