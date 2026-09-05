@@ -1,19 +1,22 @@
 # Skill Registry
 
-This file lists the skills and platform adapters in the library.
+This file lists the skills and platform adapters in the library. See
+[skills/_index.md](skills/_index.md) for routing guidance and the skill
+composition graph, and [skills/_shared/CORE.md](skills/_shared/CORE.md) for the
+shared baseline every skill inherits.
 
 ## Skills
 
-| Skill | Version | Status | Tags | Adapters |
-|---|---|---|---|---|
-| [web-research](skills/web-research/SKILL.md) | 1.0.0 | stable | web, research, search, summarization | windsurf, devin, openai, claude, cursor |
-| [code-review](skills/code-review/SKILL.md) | 1.0.0 | stable | code, review, quality, static-analysis, collaboration | — |
-| [security-audit](skills/security-audit/SKILL.md) | 1.0.0 | stable | security, audit, vulnerabilities, secrets, static-analysis | — |
-| [document-summarization](skills/document-summarization/SKILL.md) | 1.0.0 | stable | documents, summarization, text-analysis, content-processing | — |
-| [requirements-analysis](skills/requirements-analysis/SKILL.md) | 1.0.0 | stable | requirements, analysis, specification, elicitation, planning | — |
-| [meeting-notes](skills/meeting-notes/SKILL.md) | 1.0.0 | stable | meetings, notes, summarization, action-items, collaboration | — |
-| [email-drafting](skills/email-drafting/SKILL.md) | 1.0.0 | stable | email, writing, communication, drafting, productivity | — |
-| [csv-analysis](skills/csv-analysis/SKILL.md) | 1.0.0 | stable | csv, data, analysis, statistics, quality | — |
+| Skill | Version | Status | Tags | Related | Adapters |
+|---|---|---|---|---|---|
+| [web-research](skills/web-research/SKILL.md) | 1.1.0 | stable | web, research, search, summarization | document-summarization, csv-analysis | windsurf, devin, openai, claude, cursor |
+| [code-review](skills/code-review/SKILL.md) | 1.1.0 | stable | code, review, quality, static-analysis, collaboration | security-audit, requirements-analysis | — |
+| [security-audit](skills/security-audit/SKILL.md) | 1.1.0 | stable | security, audit, vulnerabilities, secrets, static-analysis | code-review | — |
+| [document-summarization](skills/document-summarization/SKILL.md) | 1.1.0 | stable | documents, summarization, text-analysis, content-processing | meeting-notes, email-drafting, web-research | — |
+| [requirements-analysis](skills/requirements-analysis/SKILL.md) | 1.1.0 | stable | requirements, analysis, specification, elicitation, planning | meeting-notes, code-review | — |
+| [meeting-notes](skills/meeting-notes/SKILL.md) | 1.1.0 | stable | meetings, notes, summarization, action-items, collaboration | email-drafting, requirements-analysis, document-summarization | — |
+| [email-drafting](skills/email-drafting/SKILL.md) | 1.1.0 | stable | email, writing, communication, drafting, productivity | meeting-notes, document-summarization | — |
+| [csv-analysis](skills/csv-analysis/SKILL.md) | 1.1.0 | stable | csv, data, analysis, statistics, quality | document-summarization, web-research | — |
 
 ## Adapters
 
